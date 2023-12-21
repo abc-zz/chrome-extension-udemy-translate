@@ -25,6 +25,9 @@ import {
     deepLRequest,
     caiyunRequest,
     msRequest,
+    cloudflareRequest,
+    openaiRequest,
+    googleTranRestRequest,
 } from '../../utils/request';
 
 
@@ -69,6 +72,13 @@ chrome.runtime.onInstalled.addListener(function (details) {
             deepl_key: '',
             caiyun_key: '',
             microsoftTranslate_key: '',
+            microsoftTranslate_region: '',
+            cloudflare_id: '',
+            cloudflare_token: '',
+            openai_key: '',
+            openai_model: '',
+            openai_url: '',
+            google_key:'',
             // 翻译的文本信息 暂时存储
             txt: {},
         });
@@ -87,7 +97,6 @@ const REQUEST = async (originText: any, callback: (param: any) => void) => {
 
         switch (trans_way) {
             case 'youdao':
-                console.log(`youdao`)
                 res = await youdaoRequset(originText);
                 callback(res)
                 break;
@@ -117,8 +126,29 @@ const REQUEST = async (originText: any, callback: (param: any) => void) => {
                 res = await msRequest(originText);
                 callback(res)
                 break
+            case 'deepl':   
+                 // Deepl
+                 res = await deepLRequest(originText);
+                 callback(res);
+                 break;
+            case 'cloudflare':   
+                 // CloudflareAI
+                 res = await cloudflareRequest(originText);
+                 callback(res);
+                 break;    
+            case 'openai':   
+                 // Openai 
+                 res = await openaiRequest(originText);
+                 callback(res);
+                 break;        
+            case 'google':   
+                 // Google tanslater
+                 res = await googleTranRestRequest(originText);
+                 callback(res);
+                 break;        
             default:
-                // deepl
+                // Deepl
+                console.log("default deepl");
                 res = await deepLRequest(originText);
                 callback(res)
         }
@@ -131,8 +161,8 @@ const REQUEST = async (originText: any, callback: (param: any) => void) => {
 
 chrome.runtime.onMessage.addListener(
     async function (request, sender, sendResponse) {
-        console.log(`sender`, sender)
         let { text } = request;
+        console.log('sender', sender);
         setTimeout(async function () {
             await REQUEST(text, function (result: { translate: any; }) {
                 console.log(`background recevied message`, request, text)

@@ -15,8 +15,8 @@ const getOriginText = () => {
       obj_text = obj_text.replace('<br>', ' ').replace(/\[(.+)\]/, '');
     }
     return obj_text;
-  } else if ($('.fg8afi5') != null) {
-    let obj_text = $('.fg8afi5').innerText;
+  } else if ($('.f7j034j') != null) {  //fg8afi5
+    let obj_text = $('.f7j034j').innerText;//fg8afi5
     if (obj_text) {
       obj_text = obj_text.replace('<br>', ' ').replace(/\[(.+)\]/, '');
     }
@@ -78,7 +78,7 @@ chrome.runtime.onMessage.addListener(async function(
   if (sub.current !== sub.pre) {
     if ($('.persistenPanel')) {
       dealSubtitle('.persistentPanel', request);
-    } else if ($('.fg8afi5')) {
+    } else if ($('.f7j034j')) { //fg8afi5
       dealSubtitle('.webPlayerUIContainer', request);
     }
   }

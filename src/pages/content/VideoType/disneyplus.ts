@@ -41,7 +41,8 @@ const run = async () => {
           sub.pre = current;
           console.log(sub);
           // send message to background
-          if (typeof chrome.app.isInstalled !== 'undefined') {
+          //if (typeof chrome.app.isInstalled !== 'undefined') { //报错：undefined。改成netflix一致的写法
+          if (chrome?.runtime?.id) { 
             chrome.runtime.sendMessage({ text: current });
           }
         }

@@ -14,7 +14,7 @@ let obj_text = '';
 function getText(node) {
   function checkout(node) {
     if (node.nodeType === 3) {
-      obj_text += node.nodeValue;
+      obj_text += ' '+node.nodeValue;
     } else {
       for (var child of node.childNodes) {
         getText(child);
@@ -29,8 +29,8 @@ const getOriginText = () => {
     getText(document.querySelector('.persistentPanel span'));
   } else if ($('.timedTextWindow').length) {
     getText(document.querySelector('.timedTextWindow span'));
-  } else if ($('.fg8afi5').length) {
-    getText(document.querySelector('.fg8afi5'));
+  } else if ($('.f7j034j').length) { //fg8afi5
+    getText(document.querySelector('.f7j034j'));   //原值：fg8afi5
   }
 };
 
@@ -49,12 +49,13 @@ const run = async () => {
       hiddenSubtitleCssInject([
         '.timedTextBackground',
         '.persistentPanel',
-        '.fg8afi5',
+        '.f7j034j',//原值：fg8afi5
       ]);
       sub.pre = obj_text;
       console.log(sub);
       // send message to background
-      if (typeof chrome.app.isInstalled !== 'undefined') {
+      //if ( typeof chrome.app.isInstalled !== 'undefined') {  //报 undefined错误，改成与nitflix一致的判断方法
+      if (chrome?.runtime?.id) {
         chrome.runtime.sendMessage({ text: obj_text });
       }
     }
@@ -79,8 +80,8 @@ chrome.runtime.onMessage.addListener(async function(
       return;
     } else if ($('.timedTextWindow').length) {
       dealSubtitle('.timedTextWindow', request);
-    } else if ($('.fg8afi5').length) {
-      dealSubtitle('.fbhsa9', request);
+    } else if ($('.f7j034j').length) {
+      dealSubtitle('.fbhsa9', request); 
     }
   }
 });

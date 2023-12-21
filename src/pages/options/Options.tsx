@@ -143,6 +143,13 @@ const Options = () => {
   const [deepl_key, setDeeplKey] = React.useState('');
   const [caiyun_key, setCaiyunKey] = React.useState('');
   const [microsoftTranslate_key, setMicrosoftKey] = React.useState('');
+  const [microsoftTranslate_region, setMicrosoftRegion] = React.useState('');
+  const [cloudflare_id, setCloudflareId] = React.useState('');
+  const [cloudflare_token, setCloudflareToken] = React.useState('');
+  const [openai_key, setOpenaiKey] = React.useState('');
+  const [openai_model, setOpenaiModel] = React.useState('');
+  const [openai_url, setOpenaiUrl] = React.useState('');
+  const [google_key, setGoogleKey] = React.useState('');
   const [trans_way, setTransway] = React.useState('youdao');
 
   useEffect(() => {
@@ -183,6 +190,27 @@ const Options = () => {
     })
     chrome.storage.local.get('microsoftTranslate_key', function ({ microsoftTranslate_key }) {
       setMicrosoftKey(microsoftTranslate_key)
+    })
+    chrome.storage.local.get('microsoftTranslate_region', function ({ microsoftTranslate_region }) {
+      setMicrosoftRegion(microsoftTranslate_region)
+    })
+    chrome.storage.local.get('cloudflare_id', function ({ cloudflare_id }) {
+      setCloudflareId(cloudflare_id)
+    })
+    chrome.storage.local.get('cloudflare_token', function ({ cloudflare_token }) {
+      setCloudflareToken(cloudflare_token)
+    })
+    chrome.storage.local.get('openai_key', function ({ openai_key }) {
+      setOpenaiKey(openai_key)
+    })
+    chrome.storage.local.get('openai_model', function ({ openai_model }) {
+      setOpenaiModel(openai_model)
+    })
+    chrome.storage.local.get('openai_url', function ({ openai_url }) {
+      setOpenaiUrl(openai_url)
+    })
+    chrome.storage.local.get('google_key', function ({ google_key }) {
+      setGoogleKey(google_key)
     })
   }, [])
 
@@ -363,6 +391,107 @@ const Options = () => {
                 value={microsoftTranslate_key}
                 style={{ width: '400px' }}
               />
+              <Input
+                name="microsoftTranslate_region"
+                onChange={(e) => {
+                  setMicrosoftRegion(e.target.value)
+                  setItem('microsoftTranslate_region', e.target.value)
+                }}
+                placeholder="区域"
+                value={microsoftTranslate_region}
+                style={{
+                  width: '400px',
+                  marginTop: '10px',
+                  marginLeft: '10px',
+                }}
+              />
+            </p>
+          </section>
+          <section>
+            <Radio value={'cloudflare'}>Cloudflare AI</Radio>
+            <p style={{ padding: '15px' }}>
+              <Input
+                name="cloudflare_id"
+                onChange={(e) => {
+                  setCloudflareId(e.target.value)
+                  setItem('cloudflare_id', e.target.value)
+                }}
+                placeholder="标识"
+                value={cloudflare_id}
+                style={{ width: '400px' }}
+              />
+              <Input
+                name="cloudflare_token"
+                onChange={(e) => {
+                  setCloudflareToken(e.target.value)
+                  setItem('cloudflare_token', e.target.value)
+                }}
+                placeholder="令牌"
+                value={cloudflare_token}
+                style={{
+                  width: '400px',
+                  marginTop: '10px',
+                  marginLeft: '10px',
+                }}
+              />
+            </p>
+          </section>
+          <section>
+            <Radio value={'openai'}>Open AI</Radio>
+            <p style={{ padding: '15px' }}>
+              <Input
+                name="openai_key"
+                onChange={(e) => {
+                  setOpenaiKey(e.target.value)
+                  setItem('openai_key', e.target.value)
+                }}
+                placeholder="秘钥"
+                value={openai_key}
+                style={{ width: '400px' }}
+              />
+              <Input
+                name="openai_model"
+                onChange={(e) => {
+                  setOpenaiModel(e.target.value)
+                  setItem('openai_model', e.target.value)
+                }}
+                placeholder="模型"
+                value={openai_model}
+                style={{
+                  width: '400px',
+                  marginTop: '10px',
+                  marginLeft: '10px',
+                }}
+              />
+              <Input
+                name="openai_url"
+                onChange={(e) => {
+                  setOpenaiUrl(e.target.value)
+                  setItem('openai_url', e.target.value)
+                }}
+                placeholder="API 接口"
+                value={openai_url}
+                style={{
+                  width: '400px',
+                  marginTop: '10px',
+                  marginLeft: '10px',
+                }}
+              />
+            </p>
+          </section>
+          <section>
+            <Radio value={'google'}>谷歌翻译官方API</Radio>
+            <p style={{ padding: '15px' }}>
+              <Input
+                name="google_key"
+                onChange={(e) => {
+                  setGoogleKey(e.target.value)
+                  setItem('google_key', e.target.value)
+                }}
+                placeholder="API Key"
+                value={google_key}
+                style={{ width: '400px' }}
+              />
             </p>
           </section>
         </Radio.Group>
@@ -384,11 +513,38 @@ const Options = () => {
           <Option key={1} value={'auto'}>
             自动识别
           </Option>
-          <Option key={2} value={'ja'}>
-            Japanese
+          <Option key={2} value={'zh'}>
+            中文
           </Option>
-          <Option key={3} value={'ko'}>
-            Korean
+          <Option key={3} value={'en'}>
+            英语
+          </Option>
+          <Option key={4} value={'ja'}>
+            日语
+          </Option>
+          <Option key={5} value={'ko'}>
+            韩语
+          </Option>
+          <Option key={6} value={'fr'}>
+            法语
+          </Option>
+          <Option key={7} value={'es'}>
+            西班牙语
+          </Option>
+          <Option key={8} value={'ar'}>
+            阿拉伯语
+          </Option>
+          <Option key={9} value={'ru'}>
+            俄语
+          </Option>
+          <Option key={10} value={'de'}>
+            德语
+          </Option>
+          <Option key={11} value={'pt'}>
+            葡萄牙语
+          </Option>
+          <Option key={12} value={'hi'}>
+            印地语
           </Option>
         </Select>
       </Card>
